@@ -12,13 +12,6 @@ const routes: Routes = [
                 path: '',
                 component: ProductsListComponent,
             },
-            {
-                path: ':id',
-                loadChildren: () =>
-                    import('./components/product/product.module').then(
-                        m => m.ProductModule
-                    ),
-            },
         ],
     },
 ];

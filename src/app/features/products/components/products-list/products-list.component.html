@@ -1,1 +1,22 @@
-<p>products-list works!</p>
+<table class="table table-hover mb-4">
+  <thead>
+  <tr>
+    <th scope="col">ID</th>
+    <th scope="col">SKU</th>
+    <th scope="col">Name</th>
+    <th scope="col">Price</th>
+  </tr>
+  </thead>
+  <tbody>
+    @for (product of products$ | async; track product.id; let i = $index) {
+      <tr (click)="openProductDetails(product)">
+        <td>{{ product.id }}</td>
+        <td>{{ product.sku }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.cost }}</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<cloudonix-product-card [product]="activeProduct"></cloudonix-product-card>

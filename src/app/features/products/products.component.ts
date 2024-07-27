@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { StorageService } from '../../shared/services/storage.service';
 import { Router } from '@angular/router';
 
 @Component({
     selector: 'cloudonix-products',
     templateUrl: './products.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsComponent {
     public constructor(

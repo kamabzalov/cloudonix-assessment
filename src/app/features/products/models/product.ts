@@ -4,5 +4,11 @@ export interface Product {
     description: string;
     name: string;
     sku: string;
-    profile: Record<string, string>;
+    profile: ProductProperties;
+}
+
+export interface ProductProperties {
+    type: string;
+    available: boolean;
+    backlog: number;
 }

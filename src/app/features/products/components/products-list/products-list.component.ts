@@ -51,11 +51,31 @@ export class ProductsListComponent implements OnInit {
 
     protected saveProduct($event: Partial<Product>) {
         if (this.activeProduct?.id) {
-            this.productsService
-                .updateProduct(this.activeProduct.id, $event)
-                .subscribe();
+            const updatedProduct: Partial<Product> = {
+                name: $event.name,
+                description: $event.description,
+                cost: $event.cost,
+                profile: $event.profile,
+            };
+            this.products$ = this.productsService
+                .updateProduct(this.activeProduct.id, updatedProduct)
+                .pipe(
+                    takeUntilDestroyed(this.destroyRef),
+                    finalize(() => {
+                        this.activeProduct = null;
+                        this.cdr.markForCheck();
+                    }),
+                    switchMap(() => this.getProducts())
+                );
         } else {
-            this.productsService.createProduct($event).subscribe();
+            this.products$ = this.productsService.createProduct($event).pipe(
+                takeUntilDestroyed(this.destroyRef),
+                finalize(() => {
+                    this.activeProduct = null;
+                    this.cdr.markForCheck();
+                }),
+                switchMap(() => this.getProducts())
+            );
         }
     }
 

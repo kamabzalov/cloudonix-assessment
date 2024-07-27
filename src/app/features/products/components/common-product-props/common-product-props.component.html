@@ -1,0 +1,22 @@
+<ng-container [formGroup]="form">
+  <div class="mb-3">
+    <label for="productType" class="form-label">Product type</label>
+    <select class="form-select" id="productType" formControlName="type">
+      <option>Choose type</option>
+      @for (typeOption of productTypeOptions; track productTypeOptions) {
+        <option [value]="typeOption">{{ typeOption }}</option>
+      }
+    </select>
+  </div>
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" id="available" formControlName="available">
+    <label class="form-check-label" for="available">
+      Available
+    </label>
+  </div>
+  <div class="mb-3">
+    <label for="backlog" class="form-label">Backlog</label>
+    <input type="number" step="1" formControlName="backlog" class="form-control" id="backlog">
+  </div>
+</ng-container>
+

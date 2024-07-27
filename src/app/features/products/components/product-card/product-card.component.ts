@@ -8,7 +8,7 @@ import {
     Output,
     SimpleChanges,
 } from '@angular/core';
-import { Product } from '../../models/product';
+import { Product, ProductProperties } from '../../models/product';
 import {
     FormControl,
     FormGroup,
@@ -24,6 +24,13 @@ interface ProductForm {
     description: FormControl<string>;
     cost: FormControl<number>;
     sku: FormControl<string>;
+    profile: FormGroup<ProductPropertiesGroup>;
+}
+
+export interface ProductPropertiesGroup {
+    type: FormControl<string>;
+    available: FormControl<boolean>;
+    backlog: FormControl<number>;
 }
 
 @Component({
@@ -62,6 +69,17 @@ export class ProductCardComponent implements OnInit, OnChanges {
                 nonNullable: true,
                 validators: [Validators.required, notEmptyValidator()],
             }),
+            profile: new FormGroup({
+                type: new FormControl<string>('', {
+                    nonNullable: true,
+                }),
+                available: new FormControl<boolean>(false, {
+                    nonNullable: true,
+                }),
+                backlog: new FormControl<number>(0, {
+                    nonNullable: true,
+                }),
+            }),
         });
     }
 
@@ -84,13 +102,25 @@ export class ProductCardComponent implements OnInit, OnChanges {
         modal.closed.subscribe(reason => {
             if (reason) {
                 this.productDeleted.emit(this.product?.id);
+                this.form.controls.sku.enable();
             }
         });
     }
 
     protected saveProduct() {
         if (this.form.valid) {
-            this.productSaved.emit(this.form.getRawValue());
+            let product: Partial<Product> = {
+                name: this.form.controls.name.value,
+                description: this.form.controls.description.value,
+                cost: this.form.controls.cost.value,
+                profile: this.form.value.profile as ProductProperties,
+            };
+
+            if (!this.product) {
+                product = { ...product, sku: this.form.value.sku };
+            }
+            this.productSaved.emit(product);
         }
+        this.form.reset();
     }
 }

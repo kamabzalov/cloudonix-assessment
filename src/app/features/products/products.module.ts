@@ -8,6 +8,7 @@ import { ProductsListComponent } from './components/products-list/products-list.
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CostFormatDirective } from '../../shared/directives/cost-format.directive';
+import { CommonProductPropsComponent } from './components/common-product-props/common-product-props.component';
 
 @NgModule({
     declarations: [
@@ -15,6 +16,7 @@ import { CostFormatDirective } from '../../shared/directives/cost-format.directi
         ProductsListComponent,
         ProductCardComponent,
         CostFormatDirective,
+        CommonProductPropsComponent,
     ],
     imports: [
         RouterModule,

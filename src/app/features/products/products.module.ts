@@ -7,12 +7,14 @@ import { ProductsComponent } from './products.component';
 import { ProductsListComponent } from './components/products-list/products-list.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CostFormatDirective } from '../../shared/directives/cost-format.directive';
 
 @NgModule({
     declarations: [
         ProductsComponent,
         ProductsListComponent,
         ProductCardComponent,
+        CostFormatDirective,
     ],
     imports: [
         RouterModule,

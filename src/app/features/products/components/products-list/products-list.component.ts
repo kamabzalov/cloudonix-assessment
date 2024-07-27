@@ -2,22 +2,26 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    DestroyRef,
+    inject,
     OnInit,
 } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
-import { Observable, of } from 'rxjs';
+import { finalize, Observable, of, switchMap } from 'rxjs';
 import { Product } from '../../models/product';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'cloudonix-products-list',
     templateUrl: './products-list.component.html',
     styleUrl: './products-list.component.css',
-    // changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsListComponent implements OnInit {
     protected products$: Observable<Product[]> = of([]);
     protected activeProduct: Product | null = null;
+    private destroyRef = inject(DestroyRef);
 
     constructor(
         private productsService: ProductsService,
@@ -26,11 +30,26 @@ export class ProductsListComponent implements OnInit {
     ) {}
 
     public ngOnInit(): void {
-        this.products$ = this.productsService.getProducts();
+        this.products$ = this.getProducts();
     }
 
     protected openProductDetails(product: Product) {
         this.activeProduct = product;
         this.cdr.markForCheck();
+    }
+
+    protected deleteProduct($event: number) {
+        this.products$ = this.productsService.deleteProduct($event).pipe(
+            takeUntilDestroyed(this.destroyRef),
+            finalize(() => {
+                this.activeProduct = null;
+                this.cdr.markForCheck();
+            }),
+            switchMap(() => this.getProducts())
+        );
+    }
+
+    private getProducts() {
+        return this.productsService.getProducts();
     }
 }

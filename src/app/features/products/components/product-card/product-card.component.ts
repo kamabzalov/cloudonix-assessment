@@ -35,6 +35,7 @@ interface ProductForm {
 export class ProductCardComponent implements OnInit, OnChanges {
     @Input() product: Product | null = null;
     @Output() productDeleted = new EventEmitter<number>();
+    @Output() productSaved = new EventEmitter<Partial<Product>>();
 
     protected form!: FormGroup<ProductForm>;
 
@@ -89,7 +90,7 @@ export class ProductCardComponent implements OnInit, OnChanges {
 
     protected saveProduct() {
         if (this.form.valid) {
-            console.log(this.form.getRawValue());
+            this.productSaved.emit(this.form.getRawValue());
         }
     }
 }

@@ -15,6 +15,17 @@ export class ProductsService {
         return this.http.get<Product[]>(`${this.apiUrl}`);
     }
 
+    public updateProduct(
+        id: number,
+        product: Partial<Product>
+    ): Observable<Product> {
+        return this.http.patch<Product>(`${this.apiUrl}/${id}`, product);
+    }
+
+    public createProduct(product: Partial<Product>): Observable<Product> {
+        return this.http.post<Product>(`${this.apiUrl}`, product);
+    }
+
     public deleteProduct(id: number) {
         return this.http.delete(`${this.apiUrl}/${id}`);
     }

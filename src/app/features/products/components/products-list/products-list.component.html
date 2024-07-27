@@ -19,4 +19,5 @@
   </tbody>
 </table>
 
-<cloudonix-product-card [product]="activeProduct" (productDeleted)="deleteProduct($event)"></cloudonix-product-card>
+<cloudonix-product-card [product]="activeProduct" (productDeleted)="deleteProduct($event)"
+                        (productSaved)="saveProduct($event)"></cloudonix-product-card>

@@ -49,6 +49,16 @@ export class ProductsListComponent implements OnInit {
         );
     }
 
+    protected saveProduct($event: Partial<Product>) {
+        if (this.activeProduct?.id) {
+            this.productsService
+                .updateProduct(this.activeProduct.id, $event)
+                .subscribe();
+        } else {
+            this.productsService.createProduct($event).subscribe();
+        }
+    }
+
     private getProducts() {
         return this.productsService.getProducts();
     }

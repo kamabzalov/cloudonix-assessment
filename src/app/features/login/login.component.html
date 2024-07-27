@@ -1,1 +1,19 @@
-<p>login works!</p>
+<div class="container">
+  <form class="row justify-content-center" [formGroup]="form" (ngSubmit)="login()">
+    <div class="col-12 col-md-4">
+      <div class="mb-3">
+        <label for="token" class="form-label">Enter token</label>
+        <input formControlName="token" type="text" class="form-control" id="token" placeholder="Enter token">
+        @if (form.dirty && !form.valid) {
+          <div class="text-danger">
+            Token is not valid
+          </div>
+        }
+      </div>
+      <div class="d-flex">
+        <button [disabled]="!form.valid" class="btn btn-primary ms-auto">Login</button>
+      </div>
+    </div>
+  </form>
+</div>
+

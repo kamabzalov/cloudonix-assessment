@@ -20,6 +20,9 @@
     <cloudonix-common-product-props
       [properties]="product?.profile"></cloudonix-common-product-props>
   </div>
+  <div class="mb-3">
+    <cloudonix-custom-product-props [customProperties]="product?.profile"></cloudonix-custom-product-props>
+  </div>
   <div class="d-flex justify-content-end mb-3">
     @if (product) {
       <button class="btn btn-danger me-2" (click)="deleteProduct()">Delete</button>

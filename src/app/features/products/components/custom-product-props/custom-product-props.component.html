@@ -1,0 +1,21 @@
+<h2>Custom product property</h2>
+<div class="mb-3">
+  <button class="btn btn-primary" (click)="addNew()">Add new</button>
+</div>
+<ng-container [formGroup]="form">
+  <ng-container formArrayName="properties">
+    @for (property of properties.controls; let i = $index; track i) {
+      <div class="row mb-3" [formGroup]="property">
+        <div class="col-5">
+          <input type="text" placeholder="Enter property name" id="key" class="form-control" formControlName="key">
+        </div>
+        <div class=" col-5">
+          <input type="text" placeholder="Enter property value" id="value" class="form-control" formControlName="value">
+        </div>
+        <div class="col">
+          <button class="btn btn-primary" (click)="removeAttribute(i)">Delete new</button>
+        </div>
+      </div>
+    }
+  </ng-container>
+</ng-container>
